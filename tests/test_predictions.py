@@ -14,10 +14,10 @@ def _normalize_angle_rad(theta: float) -> float:
     actual values.
 
     Args:
-        theta (float): The angle in Cartesian radians.
+        theta (float): Angle in Cartesian radians.
 
     Returns:
-        float: The normalized Cartesian radian angle in [0, 2pi).
+        float: Normalized Cartesian radian angle in [0, 2pi).
     """
     return theta % (2*math.pi)
 
@@ -65,7 +65,7 @@ class TestPredictions(unittest.TestCase):
             **kwargs: Keyword arguments to pass to func.
         
             Returns:
-                str: ConcatConcatenated printed output.
+                str: Concatenated printed output.
         """
         with patch("builtins.print") as mock_print:
             func(*args, **kwargs)
@@ -81,7 +81,7 @@ class TestPredictions(unittest.TestCase):
         Assert that printed output contains all expected substrings.
 
         Args:
-            printed (str): The printed output text.
+            printed (str): Printed output text.
             expected_strings (list[str]): Substrings expected to be in printed.
         """
         for expected in expected_strings:
@@ -113,8 +113,8 @@ class TestPredictions(unittest.TestCase):
     @patch("builtins.print")
     def test_predict_stronghold_with_graph(self, mock_print, mock_show):
         """
-        Test that predict_stronghold shows a graph when the --g/-g flag is
-        used.
+        Test that predict_stronghold shows a graph when the --g/-g optional
+        flag is used.
         """
         theta1 = math.radians(60)
         theta2 = math.radians(120)
@@ -124,8 +124,8 @@ class TestPredictions(unittest.TestCase):
     @patch("builtins.print")
     def test_predict_stronghold_origin_intersection(self, mock_print):
         """
-        Test predict_stronghold outputs coordinates at the origin when
-        we mathematically expected the intersection to be (0, 0)
+        Test predict_stronghold outputs coordinates at the origin when we
+        mathematically expect the intersection to be (0, 0)
         """
         theta1 = math.radians(135)
         theta2 = math.radians(45)

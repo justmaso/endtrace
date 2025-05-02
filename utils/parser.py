@@ -1,3 +1,18 @@
+"""
+Command-line argument parser for endtrace, a Minecraft stronghold prediction
+tool.
+
+This script parses user input for data from two Eye of Ender throws, including
+their coordinates and angles. It also supports an optional flag to display a
+graphical visualization of the predicted stronghold location (as opposed to
+just printing it).
+
+Arguments:
+	x1, z1, theta1: Coordinates and angle of the first throw.
+    x2, z2, theta2: Coordinates and angle of the second throw.
+    -g, --graph: Optional flag to enable graphical output.
+"""
+
 import argparse
 
 parser = argparse.ArgumentParser(

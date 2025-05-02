@@ -8,9 +8,8 @@ from endtrace import main
 @contextmanager
 def patched_main_env(args):
     """
-    Context manager to patch builtins.print, sys.argv, and
-    sys.stderr for running endtrace.main() in a controlled
-    environment in tests.
+    Context manager to patch builtins.print, sys.argv, and sys.stderr for
+    running endtrace.main() in a controlled environment for testing.
 
     Args:
         args (list): List of command-line arguments to simulate.
@@ -20,6 +19,7 @@ def patched_main_env(args):
         patch.object(sys, "argv", ["endtrace"] + args),
         patch("sys.stderr", new_callable=io.StringIO)
     ): yield
+
 
 class TestMainValidation(unittest.TestCase):
     """

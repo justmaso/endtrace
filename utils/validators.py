@@ -1,9 +1,25 @@
+"""
+Validation utilities for endtrace, a Minecraft stronghold prediction tool.
+
+Provides exceptions and functions to validate coordinates and angles
+used in triangulation-based stronghold location logic.
+"""
+
 class CoordsError(Exception):
-    pass
+	"""
+	Raised when input coordinates are invalid or degenerate (and will cause
+	mathemetical inconsistencies with the triangulation algorithm).
+	"""
+	pass
 
 
 class AngleError(Exception):
-    pass
+	"""
+	Raised when input angles are invalid or lead to degenerate stronghold
+	predictions (i.e., infinite intersections or zero intersections).
+	
+	"""
+	pass
 
 
 def validate_coords(x1: float, z1: float, x2: float, z2: float) -> None:

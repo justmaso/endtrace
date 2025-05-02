@@ -4,7 +4,7 @@ import io
 from utils.parser import parser
 
 class TestParser(unittest.TestCase):
-    """Unit test for the command-line argument parser."""
+    """Unit tests for the command-line argument parser."""
 
     def test_parse_all_required_args(self):
         """

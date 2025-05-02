@@ -142,6 +142,7 @@ def predict_stronghold(
 
     return (rounded_pred_x, rounded_pred_z)
 
+
 def main():
     args = parser.parse_args()
     x1, z1, theta1 = args.x1, args.z1, args.theta1
