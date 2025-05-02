@@ -7,7 +7,7 @@
 </div>
 
 <p align="center">
-    A simple tool that locates Minecraft strongholds
+    A command-line tool that locates Minecraft strongholds
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 ---
 
 ## About
-A simple tool that locates Minecraft strongholds using data from two Eye of Ender throws. Easily obtain stronghold coordinates and visualize the prediction if desired.
+A lightweight Python command-line tool that locates Minecraft strongholds using data from two Eye of Ender throws. Easily obtain stronghold coordinates and visualize the prediction if desired.
 
 
 ## Installation
@@ -39,7 +39,7 @@ conda install --file requirements.txt
 
 
 ## Usage
-### CLI Options:
+### Command-Line Reference
 ```
 usage: endtrace [-h] [-g] x1 z1 theta1 x2 z2 theta2
 
@@ -59,7 +59,7 @@ options:
 ```
 
 ### Gathering Data from Eye of Ender Throws:
-1. Open the debug screen by pressing `F3` on your keyboard
+1. Open the debug screen by pressing <kbd>F3</kbd> on your keyboard
 2. Throw an Eye of Ender
 3. Center your crosshair over the thrown Eye of Ender
 4. Gather the necessary data for the prediction to work (i.e., `x`, `z`, `theta`):
@@ -76,6 +76,8 @@ predicted stronghold coords:
         (x=-1553.15, y=?, z=-4836.34)
 ```
 
-The above example produces the following visualization:
+The above example produces the following visualization by using the `--graph` flag:
 
-![example endtrace visualization](images/endtrace-example.png)
+<p align="center">
+    <img width="100%" src="images/endtrace-example.png">
+</p>
