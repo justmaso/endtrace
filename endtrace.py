@@ -23,6 +23,7 @@ import math
 import matplotlib.pyplot as plt
 import sys
 
+
 def _transform_minecraft_angle_to_cartesian_rads(theta: float) -> float:
     """
     Transforms a Minecraft angle (in degrees) to a Cartesian angle (in
@@ -41,8 +42,24 @@ def _transform_minecraft_angle_to_cartesian_rads(theta: float) -> float:
         theta += sys.float_info.epsilon 
 
     # transform angles to be in radians and the cartesian plane
-    if theta > 0: return math.radians(-theta + 270)
-    else: return math.radians(-theta - 90)
+    # return is negated since z-axis is flipped in minecraft
+    if theta > 0:
+        return -math.radians(-theta + 270)
+    else:
+        return -math.radians(-theta - 90)
+
+
+def _clean_zero(val: float) -> float:
+    """
+    Normalizes -0.0 to 0.0 for cleaner output.
+
+    Args:
+        val (float): A rounded float value.
+    
+    Returns:
+        float: 0.0 if val is -0.0, otherwise val.
+    """
+    return 0.0 if val == 0 else val
 
 
 def predict_stronghold(
@@ -65,6 +82,10 @@ def predict_stronghold(
     Returns:
         tuple[float, float]: The approximated (x, z) coords of the stronghold.
     """
+    # transform minecraft angles to radians in the cartesian plane
+    theta1 = _transform_minecraft_angle_to_cartesian_rads(theta1)
+    theta2 = _transform_minecraft_angle_to_cartesian_rads(theta2)
+
     # get the slopes of each throw
     m1 = math.tan(theta1)
     m2 = math.tan(theta2)
@@ -74,8 +95,8 @@ def predict_stronghold(
     # check images/endtrace-math.pdf for work
     pred_x = (m2*x2 - m1*x1 + z1 - z2)/(m2 - m1)
     pred_z = (m1*m2*(x2 - x1) + m2*z1 - m1*z2)/(m2 - m1)
-    rounded_pred_x = round(pred_x, 2)
-    rounded_pred_z = round(pred_z, 2)
+    rounded_pred_x = _clean_zero(round(pred_x, 2))
+    rounded_pred_z = _clean_zero(round(pred_z, 2))
 
     # print regardless of graphing or not
     print(
@@ -159,10 +180,6 @@ def main():
     except AngleError as angle_error:
         print(f"AngleError: {angle_error}")
         sys.exit(1)
-
-    # transform minecraft angles to radians in the cartesian plane
-    theta1 = _transform_minecraft_angle_to_cartesian_rads(theta1)
-    theta2 = _transform_minecraft_angle_to_cartesian_rads(theta2)
 
     # perform the prediction
     predict_stronghold(x1, z1, theta1, x2, z2, theta2, graph)

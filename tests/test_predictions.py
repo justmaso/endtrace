@@ -44,7 +44,8 @@ class TestPredictions(unittest.TestCase):
         Test conversion of cardinal Minecraft angles to Cartesian radians.
         """
         minecraft_degrees = [180, -90, 0, 90]
-        cartesian_radians = [math.pi/2, 0, 3*math.pi/2, math.pi]
+        # cartesian_radians = [math.pi/2, 0, 3*math.pi/2, math.pi]
+        cartesian_radians = [3*math.pi/2, 0, math.pi/2, math.pi]
         self._assert_angle_conversion(minecraft_degrees, cartesian_radians)
     
     def test_transform_minecraft_angles_to_cartesian_rads_non_cardinals(self):
@@ -52,7 +53,8 @@ class TestPredictions(unittest.TestCase):
         Test conversion of non-cardinal Minecraft angles to Cartesian radians.
         """
         minecraft_degrees = [-135, -45, 45, 135]
-        cartesian_radians = [math.pi/4, 7*math.pi/4, 5*math.pi/4, 3*math.pi/4]
+        # cartesian_radians = [math.pi/4, 7*math.pi/4, 5*math.pi/4, 3*math.pi/4]
+        cartesian_radians = [7*math.pi/4, math.pi/4, 3*math.pi/4, 5*math.pi/4]
         self._assert_angle_conversion(minecraft_degrees, cartesian_radians)
 
     def _get_printed_output(self, func, *args, **kwargs):
@@ -127,14 +129,10 @@ class TestPredictions(unittest.TestCase):
         Test predict_stronghold outputs coordinates at the origin when we
         mathematically expect the intersection to be (0, 0)
         """
-        theta1 = math.radians(135)
-        theta2 = math.radians(45)
-
-        # intersection is (mathematically) the origin
         printed = self._get_printed_output(
             predict_stronghold,
-            10, -10, theta1,
-            -10, -10, theta2
+            10, -10, 45,
+            -10, -10, -45
         )
 
         self.assertIn("x=0.0", printed)

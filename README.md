@@ -68,11 +68,11 @@ options:
 
 
 ## Example
-Once you've collected throw data from distinct and decently distant Eye of Ender throws, enter it into the command line as follows:
+Once you've collected throw data from distinct and sufficiently distant Eye of Ender throws, enter it into the command line as follows:
 
 ```
-python endtrace.py -2567.330 -4630 101.5 -1967 -4630 116.5 --graph
-predicted stronghold coords: (x=-1553.15, y=?, z=-4836.34)
+python endtrace.py 0.586 0.512 109.9 -350.193 0.226 115 --graph
+predicted stronghold coords: (x=-1564.75, y=?, z=-566.13)
 ```
 
 The above example produces the following visualization by using the `--graph` flag:
