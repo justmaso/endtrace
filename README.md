@@ -68,7 +68,7 @@ options:
 
 
 ## Example
-After obtaining the data from both Eye of Ender throws, input it as follows:
+Once you've collected throw data from distinct and decently distant Eye of Ender throws, enter it into the command line as follows:
 
 ```
 python endtrace.py -2567.330 -4630 101.5 -1967 -4630 116.5 --graph
