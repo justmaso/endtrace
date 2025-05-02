@@ -22,7 +22,6 @@ from endtrace.parser import parser
 from endtrace.validators import *
 import math
 import matplotlib.pyplot as plt
-import numpy as np
 import sys
 
 
@@ -74,7 +73,7 @@ theta2 = _transform_angle_to_rad(theta2)
 def predict_stronghold(
     x1: float, z1: float, theta1: float,
     x2: float, z2: float, theta2: float
-) -> tuple[float, float]:
+) -> None:
     """
     Predicts the (Cartesian) stronghold coordinates based on data from
     two Eye of Ender throws. Prints the stronghold prediction.
@@ -88,7 +87,7 @@ def predict_stronghold(
         theta2 (float): Angle of the second throw (in Cartesian radians).
 
     Returns:
-        tuple[float, float]: The predicted (x, z) stronghold coordinates.
+        None
     """
     # get the slopes of each throw
     m1 = math.tan(theta1)
@@ -120,11 +119,6 @@ def predict_stronghold(
         ax.set_ylabel("z-axis (inverted)")
         plt.tight_layout(pad=3.0)
 
-        width = 250
-        values = 2 # only two points are needed for a line
-        x = np.linspace(pred_x - width, pred_x + width, values)
-        z = np.linspace(pred_z - width, pred_z + width, values)
-
         # round the intercepts for visual appeal
         intercept1 = round(-m1*x1 + z1, 2)
         intercept2 = round(-m2*x2 + z2, 2)
@@ -144,14 +138,26 @@ def predict_stronghold(
         throw1 = f"throw1: z = {rounded_m1}x {sign1} {intercept1}"
         throw2 = f"throw2: z = {rounded_m2}x {sign2} {intercept2}"
 
-        # plot the throws
-        ax.plot(x, m1*(x - x1) + z1, "-", lw=2.0, label=throw1, color="#316364")
-        ax.plot(x, m2*(x - x2) + z2, "-", lw=2.0, label=throw2, color="#659B7D")
-
-        # define the prediction string
+        # plot the throws and prediction
+        dx = dz = 250  # the block distance around the prediction
+        bounds = [pred_x - dx, pred_x, pred_x + dz]
+        ax.plot(
+            bounds,
+            list(map(lambda x: m1*x - m1*x1 + z1, bounds)),
+            "-",
+            lw=2.0,
+            label=throw1,
+            color="#316364"
+        )
+        ax.plot(
+            bounds,
+            list(map(lambda x: m2*x - m2*x2 + z2, bounds)),
+            "-",
+            lw=2.0,
+            label=throw2,
+            color="#659B7D"
+        )
         sh = f"stronghold prediction: ({rounded_pred_x}, {rounded_pred_z})"
-
-        # plot the intersection
         ax.plot(pred_x, pred_z, "o", label=sh, color="#102C31")
 
         plt.legend(loc="upper left")
