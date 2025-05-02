@@ -17,33 +17,13 @@ Attributes:
     None
 """
 
-
-from endtrace.parser import parser
-from endtrace.validators import *
+from utils.parser import parser
+from utils.validators import *
 import math
 import matplotlib.pyplot as plt
 import sys
 
-
-args = parser.parse_args()
-x1, z1, theta1 = args.x1, args.z1, args.theta1
-x2, z2, theta2 = args.x2, args.z2, args.theta2
-graph = args.graph
-
-
-# validate the inputted args
-try:
-    validate_coords(x1, z1, x2, z2)
-    validate_angles(theta1, theta2)
-except CoordsError as coords_error:
-    print(f"CoordsError: {coords_error}")
-    sys.exit(1)
-except AngleError as angle_error:
-    print(f"AngleError: {angle_error}")
-    sys.exit(1)
-
-
-def _transform_angle_to_rad(theta: float) -> float:
+def _transform_minecraft_angle_to_cartesian_rads(theta: float) -> float:
     """
     Transforms a Minecraft angle (in degrees) to a Cartesian angle (in
     radians).
@@ -65,15 +45,11 @@ def _transform_angle_to_rad(theta: float) -> float:
     else: return math.radians(-theta - 90)
 
 
-# transform minecraft angles to radians in the cartesian plane
-theta1 = _transform_angle_to_rad(theta1)
-theta2 = _transform_angle_to_rad(theta2)
-
-
 def predict_stronghold(
     x1: float, z1: float, theta1: float,
-    x2: float, z2: float, theta2: float
-) -> None:
+    x2: float, z2: float, theta2: float,
+    graph: bool = False
+) -> tuple[float, float]:
     """
     Predicts the (Cartesian) stronghold coordinates based on data from
     two Eye of Ender throws. Prints the stronghold prediction.
@@ -87,7 +63,7 @@ def predict_stronghold(
         theta2 (float): Angle of the second throw (in Cartesian radians).
 
     Returns:
-        None
+        tuple[float, float]: The approximated (x, z) coords of the stronghold.
     """
     # get the slopes of each throw
     m1 = math.tan(theta1)
@@ -103,8 +79,8 @@ def predict_stronghold(
 
     # print regardless of graphing or not
     print(
-        f"predicted stronghold coords:\n",
-        f"\t(x={rounded_pred_x},",
+        f"predicted stronghold coords:",
+        f"(x={rounded_pred_x},",
         f"y=?,",
         f"z={rounded_pred_z})"
     )
@@ -164,5 +140,32 @@ def predict_stronghold(
         plt.grid()
         plt.show()
 
+    return (rounded_pred_x, rounded_pred_z)
 
-predict_stronghold(x1, z1, theta1, x2, z2, theta2)
+def main():
+    args = parser.parse_args()
+    x1, z1, theta1 = args.x1, args.z1, args.theta1
+    x2, z2, theta2 = args.x2, args.z2, args.theta2
+    graph = args.graph
+
+    # validate the inputted args
+    try:
+        validate_coords(x1, z1, x2, z2)
+        validate_angles(theta1, theta2)
+    except CoordsError as coords_error:
+        print(f"CoordsError: {coords_error}")
+        sys.exit(1)
+    except AngleError as angle_error:
+        print(f"AngleError: {angle_error}")
+        sys.exit(1)
+
+    # transform minecraft angles to radians in the cartesian plane
+    theta1 = _transform_minecraft_angle_to_cartesian_rads(theta1)
+    theta2 = _transform_minecraft_angle_to_cartesian_rads(theta2)
+
+    # perform the prediction
+    predict_stronghold(x1, z1, theta1, x2, z2, theta2, graph)
+
+
+if __name__ == "__main__":
+    main()

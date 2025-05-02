@@ -72,8 +72,7 @@ After obtaining the data from both Eye of Ender throws, input it as follows:
 
 ```
 python endtrace.py -2567.330 -4630 101.5 -1967 -4630 116.5 --graph
-predicted stronghold coords:
-        (x=-1553.15, y=?, z=-4836.34)
+predicted stronghold coords: (x=-1553.15, y=?, z=-4836.34)
 ```
 
 The above example produces the following visualization by using the `--graph` flag:
